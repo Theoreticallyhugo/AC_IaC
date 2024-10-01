@@ -23,11 +23,11 @@ classifiers = [
 AC-IaC = "AC_IaC.command_line:main"
 
 [project.urls]
-Homepage = "https://example.com"
+Homepage = "https://github.com/Theoreticallyhugo/AC_IaC"
 Documentation = "https://readthedocs.org"
-Repository = "https://github.com/me/spam.git"
-Issues = "https://github.com/me/spam/issues"
-Changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
+Repository = "https://github.com/Theoreticallyhugo/AC_IaC"
+Issues = "https://github.com/Theoreticallyhugo/AC_IaC/issues"
+Changelog = "https://github.com/Theoreticallyhugo/AC_IaC/blob/main/CHANGELOG.md"
 Data = "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/2422"
 
 [build-system]
