@@ -32,67 +32,6 @@ from tqdm import tqdm
 from . import sep_tok_pipe, spans_pipe
 
 
-def get_args():
-    """
-    handles the argument parsing, when full_pipe.py is run from the commandline
-    return:
-        parsed commandline arguments
-    """
-    arg_par = argparse.ArgumentParser()
-    arg_par.add_argument(
-        "--input_path",
-        "-i",
-        # default=Path("./data/genres_original/"),
-        type=Path,
-        help="path to the data directory containing the "
-        + "text files, or singular text file, to process .",
-    )
-    arg_par.add_argument(
-        "--output_dir",
-        "-o",
-        # default=Path("./data/lyrics_original/"),
-        type=Path,
-        help="path to the directory to save the output.",
-    )
-    arg_par.add_argument(
-        "--spans_model",
-        "-s",
-        default="Theoreticallyhugo/longformer-spans",
-        type=str,
-        help="model to use for finding the spans."
-        + "either path to local model or path of huggingface repository"
-        + 'in the format of "user/model"',
-    )
-    arg_par.add_argument(
-        "--labels_model",
-        "-l",
-        default="Theoreticallyhugo/longformer-sep_tok",
-        type=str,
-        help="model to use for labeling the spans. "
-        + "either path to local model or path of huggingface repository "
-        + 'in the format of "user/model"',
-    )
-    arg_par.add_argument(
-        "--verbose",
-        "-v",
-        default=False,
-        const=True,
-        nargs="?",
-        help="set this flag to increase verbosity",
-    )
-    arg_par.add_argument(
-        "--dry",
-        "-d",
-        default=False,
-        const=True,
-        nargs="?",
-        help="set this flag to run without inference",
-    )
-
-    args = arg_par.parse_args()
-    return args
-
-
 def to_brat(text, pipe_out, verbose=False):
     """
     expects a text with separation tokens, and the ouput of the sep_tok model.
@@ -289,15 +228,3 @@ def main(input_path, output_dir, spans_model, labels_model, verbose, dry):
                 w.write(txt)
             with open(str(output_file)[:-3] + "ann", "w") as w:
                 w.writelines(ann)
-
-
-if __name__ == "__main__":
-    args = get_args()
-    main(
-        args.input_path,
-        args.output_dir,
-        args.spans_model,
-        args.labels_model,
-        args.verbose,
-        args.dry,
-    )

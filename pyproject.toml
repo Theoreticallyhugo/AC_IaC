@@ -1,6 +1,6 @@
 [project]
 name = "AC_IaC"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   { name="Hugo Meinhof", email="me@theoreticallyhugo.com" },
 ]
@@ -20,7 +20,8 @@ classifiers = [
 ]
 
 [project.scripts]
-AC-IaC = "AC_IaC.command_line:main"
+AC-IaC = "AC_IaC.command_line:inference"
+AC-IaC-train = "AC_IaC.command_line:train"
 
 [project.urls]
 Homepage = "https://github.com/Theoreticallyhugo/AC_IaC"
@@ -33,3 +34,10 @@ Data = "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/2422"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--log-cli-level=0 --color=yes"
+testpaths = [
+    "tests",
+]

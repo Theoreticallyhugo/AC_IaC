@@ -12,3 +12,7 @@ python3 -m build
 python3 -m pip install --upgrade twine
 python3 -m twine upload --repository testpypi dist/*
 ```
+## install - for testing 
+```
+python3 -m pip install --upgrade --index-url https://test.pypi.org/simple/ --no-deps AC-IaC
+```
