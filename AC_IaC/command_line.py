@@ -5,7 +5,6 @@ from .inference import full_pipe
 
 
 def inference():
-    print("doing inference")
     args = get_inference_args()
     full_pipe.main(
         args.input_path,
@@ -23,16 +22,17 @@ def train():
 
 def get_inference_args():
     """
-    handles the argument parsing, when full_pipe.py is run from the commandline
+    handles the argument parsing, when inference is run from the commandline
     return:
         parsed commandline arguments
     """
-    arg_par = argparse.ArgumentParser()
+    arg_par = argparse.ArgumentParser(description="This is Argument Component - Identification and Classification expanding Stab and Gurevychs work on argument mining, and their paper from 2017 in particular.", epilog="")
     arg_par.add_argument(
         "--input_path",
         "-i",
         # default=Path("./data/genres_original/"),
         type=Path,
+        required=True,
         help="path to the data directory containing the "
         + "text files, or singular text file, to process .",
     )
@@ -40,6 +40,7 @@ def get_inference_args():
         "--output_dir",
         "-o",
         # default=Path("./data/lyrics_original/"),
+        required=True,
         type=Path,
         help="path to the directory to save the output.",
     )
