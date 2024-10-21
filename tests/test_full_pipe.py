@@ -3,33 +3,35 @@ from pathlib import Path
 from AC_IaC.inference.full_pipe import main
 
 
-def test_rebuilt_filestructure():
+def test_rebuilt_filestructure(tmpdir):
     main(
         Path("./tests/test_in_structure"),
-        Path("./tests/test_out_structure"),
+        Path(tmpdir),
         "aa",
         "bb",
         False,
         True,
     )
-    assert Path("./tests/test_out_structure/").is_dir()
-    assert Path("./tests/test_out_structure/S.txt").is_file()
-    assert Path("./tests/test_out_structure/a/").is_dir()
-    assert Path("./tests/test_out_structure/a/AA.txt").is_file()
-    assert Path("./tests/test_out_structure/b/").is_dir()
-    assert Path("./tests/test_out_structure/b/bb/").is_dir()
-    assert Path("./tests/test_out_structure/b/bb/BBB.txt").is_file()
+    tmpdir = str(tmpdir)
+    assert Path(tmpdir).is_dir()
+    assert Path(tmpdir + "/S.txt").is_file()
+    assert Path(tmpdir + "/a/").is_dir()
+    assert Path(tmpdir + "/a/AA.txt").is_file()
+    assert Path(tmpdir + "/b/").is_dir()
+    assert Path(tmpdir + "/b/bb/").is_dir()
+    assert Path(tmpdir + "/b/bb/BBB.txt").is_file()
 
 
-def test_single_file_dry():
+def test_single_file_dry(tmpdir):
     main(
         Path("./tests/test_in_file/A.txt"),
-        Path("./tests/test_out_file/"),
+        Path(tmpdir),
         "aa",
         "bb",
         False,
         True,
     )
-    assert Path("./tests/test_out_file/").is_dir()
-    assert Path("./tests/test_out_file/A.txt").is_file()
-    assert Path("./tests/test_out_file/A.ann").is_file()
+    tmpdir = str(tmpdir)
+    assert Path(tmpdir).is_dir()
+    assert Path(tmpdir + "/A.txt").is_file()
+    assert Path(tmpdir + "/A.ann").is_file()
