@@ -11,7 +11,10 @@ dependencies = [
   "transformers",
   "datasets",
   "colorama",
-  "torch"
+  "torch",
+  "evaluate",
+  "scikit-learn",
+  "accelerate",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -21,7 +24,7 @@ classifiers = [
 
 [project.scripts]
 AC-IaC = "AC_IaC.command_line:inference"
-AC-IaC-train = "AC_IaC.command_line:train"
+AC-IaC-train = "AC_IaC.command_line:train_wrapper"
 
 [project.urls]
 Homepage = "https://github.com/Theoreticallyhugo/AC_IaC"

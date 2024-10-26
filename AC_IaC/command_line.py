@@ -1,7 +1,9 @@
 import argparse
+import datasets
 from pathlib import Path
 
 from .inference import full_pipe
+from .training.train import train
 
 
 def inference():
@@ -16,8 +18,6 @@ def inference():
     )
 
 
-def train():
-    print("doing training")
 
 
 def get_inference_args():
@@ -82,6 +82,113 @@ def get_inference_args():
     args = arg_par.parse_args()
     return args
 
+def train_wrapper():
+    print("welcome to the training")
+    args = get_train_args()
+    # only spans and sep_tok are required for the pipe to work
+    model_names = [
+        "spans",
+        "sep_tok",
+        "all",
+    ]
+
+    assert args.model in model_names
+
+    if args.model == "all":
+        models = model_names[:-1]
+    else:
+        models = [args.model]
+
+    for model in models:
+        # five-fold-cross-validation
+        print("loading data")
+        tests_ds = datasets.load_dataset(
+            "Theoreticallyhugo/Stab-Gurevych-Essays",
+            model,
+            split=[f"train[{k}%:{k+20}%]" for k in range(0, 100, 20)],
+            trust_remote_code=True,
+        )
+        trains_ds = datasets.load_dataset(
+            "Theoreticallyhugo/Stab-Gurevych-Essays",
+            model,
+            split=[f"train[:{k}%]+train[{k+20}%:]" for k in range(0, 100, 20)],
+            trust_remote_code=True,
+        )
+
+        for train_ds, test_ds, index in zip(
+            trains_ds, tests_ds, range(len(tests_ds))
+        ):
+            train(
+                model,
+                args.seed,
+                args.epochs,
+                train_ds,
+                test_ds,
+                index,
+                args.output_dir,
+                args.push,
+            )
+            if not args.cross_validation:
+                break
+
+def get_train_args():
+    """
+    handles the argument parsing, when main.py is run from the commandline
+    :return: the arguments parsed from the command line input
+    """
+    arg_par = argparse.ArgumentParser()
+    arg_par.add_argument(
+        "--model",
+        "-m",
+        default="all",
+        type=str,
+        help="model to train",
+    )
+    arg_par.add_argument(
+        "--epochs",
+        "-e",
+        default=5,
+        type=int,
+        help="number of epochs to train",
+    )
+    arg_par.add_argument(
+        "--seed",
+        "-s",
+        default=42,
+        type=int,
+        help="seed to run the model with",
+    )
+    arg_par.add_argument(
+        "--output_dir",
+        "-o",
+        # default=Path("./data/lyrics_original/"),
+        required=True,
+        type=Path,
+        help="path to the directory to save the model(s).",
+    )
+    arg_par.add_argument(
+        "--push",
+        "-p",
+        default=True,
+        type=str,
+        nargs='?',
+        const=False,
+        help="add tag to DISABLE PUSHING. \n"
+        + "Pushing is enabled per default, but requires to be logged in via huggingface-cli",
+    )
+    arg_par.add_argument(
+        "--cross_validation",
+        "-cv",
+        default=False,
+        type=bool,
+        nargs="?",
+        const=True,
+        help="add tag to ENABLE CROSS-VALIDATION.\n"
+        + "cross-validation is disabled per default",
+    )
+
+    args = arg_par.parse_args()
+    return args
 
 # def main():
 #     args = full_pipe.get_args()
