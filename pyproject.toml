@@ -1,6 +1,6 @@
 [project]
 name = "AC_IaC"
-version = "0.1.1"
+version = "0.1.2"
 authors = [
   { name="Hugo Meinhof", email="me@theoreticallyhugo.com" },
 ]
