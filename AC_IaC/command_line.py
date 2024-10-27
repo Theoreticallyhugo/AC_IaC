@@ -26,7 +26,7 @@ def get_inference_args():
     return:
         parsed commandline arguments
     """
-    arg_par = argparse.ArgumentParser(description="This is Argument Component - Identification and Classification expanding Stab and Gurevychs work on argument mining, and their paper from 2017 in particular.", epilog="")
+    arg_par = argparse.ArgumentParser(description="This is Argument Component - Identification and Classification expanding Stab and Gurevychs work on argument mining, and their paper from 2017 in particular. The inference pipeline requires two models that can be trained with the command AC-IaC-train, which is installed alongside AC-IaC.", epilog="")
     arg_par.add_argument(
         "--input_path",
         "-i",
@@ -47,20 +47,24 @@ def get_inference_args():
     arg_par.add_argument(
         "--spans_model",
         "-s",
-        default="Theoreticallyhugo/longformer-spans",
+        # default="Theoreticallyhugo/longformer-spans",
         type=str,
         help="model to use for finding the spans."
         + "either path to local model or path of huggingface repository"
-        + 'in the format of "user/model"',
+        + 'in the format of "user/model". '
+        + 'for testing you can try to use "Theoreticallyhugo/longformer-spans, "'
+        + "but proper availability is not guaranteed",
     )
     arg_par.add_argument(
         "--labels_model",
         "-l",
-        default="Theoreticallyhugo/longformer-sep_tok",
+        # default="Theoreticallyhugo/longformer-sep_tok",
         type=str,
         help="model to use for labeling the spans. "
         + "either path to local model or path of huggingface repository "
-        + 'in the format of "user/model"',
+        + 'in the format of "user/model". '
+        + 'for testing you can try to use "Theoreticallyhugo/longformer-sep_tok, "'
+        + "but proper availability is not guaranteed",
     )
     arg_par.add_argument(
         "--verbose",
