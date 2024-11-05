@@ -1,3 +1,4 @@
+set -e
 enva
 echo "=== install build ==="
 python3 -m pip install --upgrade build
