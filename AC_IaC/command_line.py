@@ -34,7 +34,9 @@ def get_inference_args():
         type=Path,
         required=True,
         help="path to the data directory containing the "
-        + "text files, or singular text file, to process .",
+        + "text files, or singular text file, to process."
+        + "for a directory, it will recursively find all txt"
+        + "files and rebuild the input structure in the output.",
     )
     arg_par.add_argument(
         "--output_dir",
