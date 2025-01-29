@@ -1,5 +1,5 @@
 # Argument Components - Identification and Classification
-This package provides a command line tool to find MajorClaims, Claims, and Premises on argumentative essays, as defined by Stab and Gurevych in their 2017 paper.
+This package provides a command line tool to find MajorClaims, Claims, and Premises on argumentative essays, as defined by Stab and Gurevych in their [2017 paper](https://aclanthology.org/J17-3005/). It is based on [my research done previously](https://github.com/Theoreticallyhugo/argument_mining_SuG).
 ## Inference
 The tool `AC-IaC` takes one or more text files and finds MajorClaims, Claims, and Premises on them. 
 The results are returned in Brat-Standoff-Format. 
