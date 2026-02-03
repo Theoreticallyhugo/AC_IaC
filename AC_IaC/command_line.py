@@ -15,6 +15,7 @@ def inference():
         args.labels_model,
         args.verbose,
         args.dry,
+        args.input_encoding,
     )
 
 
@@ -37,6 +38,15 @@ def get_inference_args():
         + "text files, or singular text file, to process."
         + "for a directory, it will recursively find all txt"
         + "files and rebuild the input structure in the output.",
+    )
+    arg_par.add_argument(
+        "--input_encoding",
+        "-e",
+        # default=Path("./data/genres_original/"),
+        type=str,
+        default=None,
+        required=False,
+        help="encoding of the input file(s).",
     )
     arg_par.add_argument(
         "--output_dir",

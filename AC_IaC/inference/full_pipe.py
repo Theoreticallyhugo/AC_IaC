@@ -138,7 +138,7 @@ def to_brat(text, pipe_out, verbose=False):
 # TODO: automatically determine encoding?
 
 
-def main(input_path, output_dir, spans_model, labels_model, verbose, dry):
+def main(input_path, output_dir, spans_model, labels_model, verbose, dry, input_encoding=None):
     if input_path is None:
         raise ValueError("No input path specified!")
     if output_dir is None:
@@ -160,9 +160,8 @@ def main(input_path, output_dir, spans_model, labels_model, verbose, dry):
             output_dir.mkdir(parents=True)
             logging.info(f"created {output_dir}")
 
-        # TODO: what about encoding?
         # read source text
-        text = input_path.read_text()
+        text = input_path.read_text(encoding=input_encoding)
         if dry:
             txt = "this is the original text"
             ann = "this should be in brat standoff format"
